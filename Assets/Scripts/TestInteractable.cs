@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class TestInteractable : Interactable
 {
-    public GameObject interactAction;
 
     private void Start()
     {
@@ -19,8 +18,18 @@ public class TestInteractable : Interactable
 
     public override void OnInteract()
     {
-        Debug.Log("INTERACTED WITH " + gameObject.name);
+        
         interactAction.SetActive(false);
+
+        switch (gameObject.tag)
+        {
+            case "CUBE":
+                Debug.Log("INTERACTED WITH " + gameObject.name);
+                break;
+            case "BED":
+                Debug.Log("CHECKED THE BABY UAAAA");
+                break;
+        }
     }
 
     public override void OnLoseFocus()
