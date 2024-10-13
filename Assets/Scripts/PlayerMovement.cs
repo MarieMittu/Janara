@@ -4,10 +4,19 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public Camera playerCamera;
     public CharacterController controller;
     public float speed = 20f;
     Vector3 velocity;
     public float gravity = -9.81f;
+
+    [SerializeField] private Vector3 interactionRayPoint = default;
+    [SerializeField] private float interactionDistance = default;
+    [SerializeField] private LayerMask interactionLayer = default;
+    private Interactable currentInteractable;
+    [SerializeField] private bool canInteract = true;
+    [SerializeField] private KeyCode interactKey = KeyCode.Mouse0;
+
 
     // Start is called before the first frame update
     void Start()
@@ -15,11 +24,37 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
+    private void HandleInteractionCheck()
+    {
+
+        if (Physics.Raycast(playerCamera.ViewportPointToRay(interactionRayPoint), out RaycastHit hit, interactionDistance))
+        {
+            if (hit.collider.gameObject.layer == 6 && (currentInteractable == null || hit.collider.gameObject.GetInstanceID() != currentInteractable.GetInstanceID()))
+            {
+                hit.collider.TryGetComponent(out currentInteractable);
+                if(currentInteractable)
+                {
+                    currentInteractable.OnFocus();
+                }
+            }
+        } else if (currentInteractable)
+        {
+            currentInteractable.OnLoseFocus();
+            currentInteractable = null;
+        }
+    }
+
+    private void HandleInteractionInput()
+    {
+        if (Input.GetKeyDown(interactKey) && currentInteractable != null && Physics.Raycast(playerCamera.ViewportPointToRay(interactionRayPoint), out RaycastHit hit, interactionDistance, interactionLayer))
+        {
+            currentInteractable.OnInteract();
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
-        
-
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
 
@@ -29,6 +64,12 @@ public class PlayerMovement : MonoBehaviour
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
 
-        
+        if (canInteract)
+        {
+            HandleInteractionCheck();
+            HandleInteractionInput();
+        }
     }
+
+
 }
