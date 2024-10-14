@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.Events.UnityAction;
+using System;
 
 public class TestInteractable : Interactable
 {
-    
+    [SerializeField] GameObject letterView;
 
     private void Start()
     {
@@ -33,10 +35,13 @@ public class TestInteractable : Interactable
                 Debug.Log("INTERACTED WITH " + gameObject.name);
                 break;
             case "BED":
-                Debug.Log("CHECKED THE BABY UAAAA");
+                EnterSubscene();
                 break;
             case "TOYS":    
                 EnterSubscene();
+                break;
+            case "LETTER":
+                ShowLetter();
                 break;
         }
     }
@@ -57,14 +62,7 @@ public class TestInteractable : Interactable
         exitBtn.SetActive(true);
         nanny.SetActive(false);
 
-        if (exitBtn != null)
-        {
-            var button = exitBtn.GetComponent<UnityEngine.UI.Button>();
-            if (button != null)
-            {
-                button.onClick.AddListener(ExitSubscene);
-            }
-        }
+        ActivateExitButton(ExitSubscene);
     }
 
     public void ExitSubscene()
@@ -78,5 +76,39 @@ public class TestInteractable : Interactable
         nanny.SetActive(true);
     }
 
+     void ActivateExitButton(Action method)
+    {
+        if (exitBtn != null)
+        {
+            var button = exitBtn.GetComponent<UnityEngine.UI.Button>();
+            if (button != null)
+            {
+
+                button.onClick.AddListener(new UnityEngine.Events.UnityAction(method));
+
+
+            }
+        }
+    }
+
+    public void ShowLetter()
+    {
+        exitBtn.SetActive(true);
+        ActivateExitButton(HideLetter);
+        letterView.SetActive(true);
+        Time.timeScale = 0f;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        
+    }
+
+    public void HideLetter()
+    {
+        letterView.SetActive(false);
+        Time.timeScale = 1f;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        exitBtn.SetActive(false);
+    }
     
 }
