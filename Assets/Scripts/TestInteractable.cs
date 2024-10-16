@@ -7,6 +7,7 @@ using System;
 public class TestInteractable : Interactable
 {
     [SerializeField] GameObject letterView;
+    [SerializeField] Light candleLight;
 
     private void Start()
     {
@@ -21,7 +22,18 @@ public class TestInteractable : Interactable
     public override void OnFocus()
     {
         Debug.Log("LOOKING AT " + gameObject.name);
-        interactAction.SetActive(true);
+
+        if (gameObject.tag == "MIRROR")
+        {
+            ShowWitch();
+        } else
+        {
+            interactAction.SetActive(true);
+        }
+            
+        
+
+        
     }
 
     public override void OnInteract()
@@ -31,9 +43,7 @@ public class TestInteractable : Interactable
 
         switch (gameObject.tag)
         {
-            case "CUBE":
-                Debug.Log("INTERACTED WITH " + gameObject.name);
-                break;
+           
             case "BED":
                 EnterSubscene();
                 break;
@@ -43,6 +53,11 @@ public class TestInteractable : Interactable
             case "LETTER":
                 ShowLetter();
                 break;
+            case "CANDLE":
+                SwitchLight();
+                break;
+ 
+                
         }
     }
 
@@ -109,6 +124,22 @@ public class TestInteractable : Interactable
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         exitBtn.SetActive(false);
+    }
+
+    public void SwitchLight()
+    {
+        if (candleLight.intensity == 0)
+        {
+            candleLight.intensity = 3;
+        } else if (candleLight.intensity > 0)
+        {
+            candleLight.intensity = 0;
+        }
+    }
+
+    public void ShowWitch()
+    {
+        Debug.Log("MIRRORRRR");
     }
     
 }

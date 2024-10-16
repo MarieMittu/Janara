@@ -8,6 +8,9 @@ TagManager:
   - BED
   - TOYS
   - LETTER
+  - CANDLE
+  - GUARDA
+  - MIRROR
   layers:
   - Default
   - TransparentFX

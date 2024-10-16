@@ -26,14 +26,17 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleInteractionCheck()
     {
-
+        Debug.Log("INTERCACTION start check " + interactionDistance);
         if (Physics.Raycast(playerCamera.ViewportPointToRay(interactionRayPoint), out RaycastHit hit, interactionDistance))
         {
+            Debug.Log("INTERCACTION 2 " + interactionDistance);
             if (hit.collider.gameObject.layer == 6 && (currentInteractable == null || hit.collider.gameObject.GetInstanceID() != currentInteractable.GetInstanceID()))
             {
+                Debug.Log("INTERCACTION 3 " + interactionDistance);
                 hit.collider.TryGetComponent(out currentInteractable);
                 if(currentInteractable)
                 {
+                    Debug.Log("INTERCACTION 4 " + interactionDistance);
                     currentInteractable.OnFocus();
                 }
             }
