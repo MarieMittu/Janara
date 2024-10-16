@@ -13,6 +13,7 @@ public class TestInteractable : Interactable
     private TMP_Text interactText;
     private bool canOpenDoor = false;
     private GameObject doorParent;
+    private GameObject bathDoorParent;
 
     private void Start()
     {
@@ -38,11 +39,11 @@ public class TestInteractable : Interactable
             interactAction.SetActive(false);
             Debug.Log("what croce one " + gameObject.transform.rotation.x);
         }
-        else if (gameObject.tag == "DOORONE" && canOpenDoor == false)
-        {
-            interactAction.SetActive(false);
-            Debug.Log("doorcheck no action " + canOpenDoor);
-        }
+        //else if (gameObject.tag == "DOORONE" && canOpenDoor == false)
+        //{
+        //    interactAction.SetActive(false);
+        //    Debug.Log("doorcheck no action " + canOpenDoor);
+        //}
         else
         {
             interactAction.SetActive(true);
@@ -78,7 +79,9 @@ public class TestInteractable : Interactable
                 break;
             case "DOORONE":
                 OpenDoorOne();
-                
+                break;
+            case "DOORTWO":
+                OpenDoorTwo();
                 break;
  
                 
@@ -184,12 +187,42 @@ public class TestInteractable : Interactable
         //{
         doorParent = GameObject.FindGameObjectWithTag("DOORHOLDER");
         Debug.Log("doorParent " + doorParent.transform.rotation.y);
-        doorParent.transform.Rotate(0f, 270f, 0f, Space.World);
+
+        if (doorParent.transform.rotation.y <= 0)
+        {
+            doorParent.transform.Rotate(0f, 270f, 0f, Space.World);
+            Debug.Log("doorParent a " + doorParent.transform.rotation.y);
+        } else
+        {
+            doorParent.transform.Rotate(0f, -270f, 0f, Space.World);
+            Debug.Log("doorParent b " + doorParent.transform.rotation.y);
+        }
+        
 
         //} else
         //{
         //    Debug.Log("doorcheck cannot open");
         //}
     }
-    
+
+    public void OpenDoorTwo()
+    {
+        
+        bathDoorParent = GameObject.FindGameObjectWithTag("Bathdoorholder");
+        Debug.Log("bath doorParent start " + bathDoorParent.transform.rotation.y);
+
+        if (bathDoorParent.transform.rotation.y <= 0)
+        {
+            bathDoorParent.transform.Rotate(0f, 290f, 0f, Space.World);
+            Debug.Log("bath doorParent open " + bathDoorParent.transform.rotation.y);
+        }
+        else
+        {
+            bathDoorParent.transform.Rotate(0f, -290f, 0f, Space.World);
+            Debug.Log("bath doorParent close " + bathDoorParent.transform.rotation.y);
+        }
+
+
+        
+    }
 }
