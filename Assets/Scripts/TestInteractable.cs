@@ -43,7 +43,9 @@ public class TestInteractable : Interactable
 
         switch (gameObject.tag)
         {
-           
+            case "CUBE":
+                Debug.Log("CUBECUBECUBE");
+                break;
             case "BED":
                 EnterSubscene();
                 break;

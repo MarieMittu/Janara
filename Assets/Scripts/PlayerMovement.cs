@@ -24,28 +24,73 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
+    //private void HandleInteractionCheck()
+    //{
+    //    Debug.Log("INTERCACTION start check " + interactionDistance);
+
+    //    Ray ray = playerCamera.ViewportPointToRay(interactionRayPoint);
+
+    //    // Visualize the ray in the Scene view (it will be visible for 1 second)
+    //    Debug.DrawRay(ray.origin, ray.direction * interactionDistance, Color.red, 1f);
+
+    //    if (Physics.Raycast(ray, out RaycastHit hit, interactionDistance))
+    //    {
+    //        Debug.Log("INTERCACTION 2 " + hit.collider.gameObject.name + "current is" + currentInteractable.name);
+    //        if (hit.collider.gameObject.layer == 6 && (currentInteractable == null || hit.collider.gameObject.GetInstanceID() != currentInteractable.GetInstanceID()))
+    //        {
+    //            Debug.Log("INTERCACTION 3 " + interactionDistance);
+    //            hit.collider.TryGetComponent(out currentInteractable);
+    //            if(currentInteractable)
+    //            {
+    //                Debug.Log("INTERCACTION 4 " + interactionDistance);
+    //                currentInteractable.OnFocus();
+    //            }
+    //        }
+    //    } else if (currentInteractable)
+    //    {
+    //        Debug.Log("NO MORE INTERCACTION");
+    //        currentInteractable.OnLoseFocus();
+    //        currentInteractable = null;
+    //    }
+    //}
+
     private void HandleInteractionCheck()
     {
-        Debug.Log("INTERCACTION start check " + interactionDistance);
-        if (Physics.Raycast(playerCamera.ViewportPointToRay(interactionRayPoint), out RaycastHit hit, interactionDistance))
+        Debug.Log("INTERACTION start check " + interactionDistance);
+
+        // Create the ray directly from the camera's forward direction
+        Ray ray = playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)); // center of the screen
+        Debug.DrawRay(ray.origin, ray.direction * interactionDistance, Color.red, 2f); // Visible for 2 seconds
+
+        // Perform a simple raycast with no conditions
+        if (Physics.Raycast(ray, out RaycastHit hit, interactionDistance, interactionLayer))
         {
-            Debug.Log("INTERCACTION 2 " + interactionDistance);
-            if (hit.collider.gameObject.layer == 6 && (currentInteractable == null || hit.collider.gameObject.GetInstanceID() != currentInteractable.GetInstanceID()))
+            Debug.Log("Raycast hit: " + hit.collider.gameObject.name);
+            hit.collider.TryGetComponent(out currentInteractable);
+            if (currentInteractable)
             {
-                Debug.Log("INTERCACTION 3 " + interactionDistance);
-                hit.collider.TryGetComponent(out currentInteractable);
-                if(currentInteractable)
-                {
-                    Debug.Log("INTERCACTION 4 " + interactionDistance);
-                    currentInteractable.OnFocus();
-                }
+                Debug.Log("INTERACTION found interactable on: " + hit.collider.gameObject.name);
+
+                currentInteractable.OnFocus();
             }
-        } else if (currentInteractable)
+            else
+            {
+                Debug.LogWarning("The object hit does not have an Interactable component: " + hit.collider.gameObject.name);
+            }
+        }
+        else if (currentInteractable)
         {
             currentInteractable.OnLoseFocus();
             currentInteractable = null;
+
+        }
+        else
+        {
+            Debug.Log("No object hit by raycast.");
         }
     }
+
+
 
     private void HandleInteractionInput()
     {
@@ -66,9 +111,9 @@ public class PlayerMovement : MonoBehaviour
 
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
-
         if (canInteract)
         {
+            Debug.Log("INTERCACTION come on");
             HandleInteractionCheck();
             HandleInteractionInput();
         }
