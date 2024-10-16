@@ -30,10 +30,12 @@ public class TestInteractable : Interactable
         else if (gameObject.tag == "CROCE" && gameObject.transform.rotation.x <= 0)
         {
             interactAction.SetActive(false);
+            Debug.Log("what croce one " + gameObject.transform.rotation.x);
         }
         else
         {
             interactAction.SetActive(true);
+            Debug.Log("what croce two " + gameObject.transform.rotation.x);
         }
             
         
@@ -155,10 +157,10 @@ public class TestInteractable : Interactable
     public void TurnCroce()
     {
         Debug.Log("why rotaiting croce " + gameObject.transform.rotation.x);
-        if (gameObject.transform.rotation.x == 1)
+        if (gameObject.transform.rotation.x > 0)
         {
-            Debug.Log("rotaiting croce");
-            gameObject.transform.Rotate(180f, 0f, 0f, Space.World);
+            gameObject.transform.Rotate(-180f, 0f, 0f, Space.World);
+            Debug.Log("rotaiting croce " + gameObject.transform.rotation.x);
         }
     }
     

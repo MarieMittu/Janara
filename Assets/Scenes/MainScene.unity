@@ -3043,7 +3043,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!108 &1038174343
 Light:
   m_ObjectHideFlags: 0
@@ -5548,6 +5548,7 @@ MonoBehaviour:
   candleLight: {fileID: 19083197}
   maxInterval: 1
   maxFlicker: 0.2
+  croce: {fileID: 199799438}
 --- !u!1001 &2056473220
 PrefabInstance:
   m_ObjectHideFlags: 0
