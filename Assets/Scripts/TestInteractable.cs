@@ -192,6 +192,7 @@ public class TestInteractable : Interactable
         {
             doorParent.transform.Rotate(0f, 270f, 0f, Space.World);
             Debug.Log("doorParent a " + doorParent.transform.rotation.y);
+            //start night timer, see nixenrap
         } else
         {
             doorParent.transform.Rotate(0f, -270f, 0f, Space.World);

@@ -17,8 +17,7 @@ public class GameManager : MonoBehaviour
     // Rule 6
     public GameObject croce;
     private Coroutine rotationCoroutine;
-    private float devilRotation = 1;
-    private bool isRotating = false;
+
 
     // Start is called before the first frame update
     void Start()

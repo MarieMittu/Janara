@@ -16,6 +16,7 @@ TagManager:
   - DOORHOLDER
   - DOORTWO
   - Bathdoorholder
+  - TIMER
   layers:
   - Default
   - TransparentFX
