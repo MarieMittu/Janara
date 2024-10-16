@@ -26,7 +26,12 @@ public class TestInteractable : Interactable
         if (gameObject.tag == "MIRROR")
         {
             ShowWitch();
-        } else
+        }
+        else if (gameObject.tag == "CROCE" && gameObject.transform.rotation.x <= 0)
+        {
+            interactAction.SetActive(false);
+        }
+        else
         {
             interactAction.SetActive(true);
         }
@@ -57,6 +62,9 @@ public class TestInteractable : Interactable
                 break;
             case "CANDLE":
                 SwitchLight();
+                break;
+            case "CROCE":
+                TurnCroce();
                 break;
  
                 
@@ -142,6 +150,16 @@ public class TestInteractable : Interactable
     public void ShowWitch()
     {
         Debug.Log("MIRRORRRR");
+    }
+
+    public void TurnCroce()
+    {
+        Debug.Log("why rotaiting croce " + gameObject.transform.rotation.x);
+        if (gameObject.transform.rotation.x == 1)
+        {
+            Debug.Log("rotaiting croce");
+            gameObject.transform.Rotate(180f, 0f, 0f, Space.World);
+        }
     }
     
 }
