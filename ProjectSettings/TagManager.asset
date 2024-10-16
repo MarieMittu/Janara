@@ -12,6 +12,8 @@ TagManager:
   - GUARDA
   - MIRROR
   - CROCE
+  - DOORONE
+  - DOORHOLDER
   layers:
   - Default
   - TransparentFX

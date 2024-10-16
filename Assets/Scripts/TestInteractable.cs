@@ -3,11 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.Events.UnityAction;
 using System;
+using TMPro;
 
 public class TestInteractable : Interactable
 {
     [SerializeField] GameObject letterView;
     [SerializeField] Light candleLight;
+
+    private TMP_Text interactText;
+    private bool canOpenDoor = false;
+    private GameObject doorParent;
 
     private void Start()
     {
@@ -17,6 +22,7 @@ public class TestInteractable : Interactable
         eye.SetActive(true);
         exitBtn.SetActive(false);
         nanny.SetActive(true);
+        
     }
 
     public override void OnFocus()
@@ -31,6 +37,11 @@ public class TestInteractable : Interactable
         {
             interactAction.SetActive(false);
             Debug.Log("what croce one " + gameObject.transform.rotation.x);
+        }
+        else if (gameObject.tag == "DOORONE" && canOpenDoor == false)
+        {
+            interactAction.SetActive(false);
+            Debug.Log("doorcheck no action " + canOpenDoor);
         }
         else
         {
@@ -50,9 +61,6 @@ public class TestInteractable : Interactable
 
         switch (gameObject.tag)
         {
-            case "CUBE":
-                Debug.Log("CUBECUBECUBE");
-                break;
             case "BED":
                 EnterSubscene();
                 break;
@@ -67,6 +75,10 @@ public class TestInteractable : Interactable
                 break;
             case "CROCE":
                 TurnCroce();
+                break;
+            case "DOORONE":
+                OpenDoorOne();
+                
                 break;
  
                 
@@ -136,6 +148,8 @@ public class TestInteractable : Interactable
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         exitBtn.SetActive(false);
+        canOpenDoor = true;
+        Debug.Log("doorcheck now here " + canOpenDoor);
     }
 
     public void SwitchLight()
@@ -162,6 +176,20 @@ public class TestInteractable : Interactable
             gameObject.transform.Rotate(-180f, 0f, 0f, Space.World);
             Debug.Log("rotaiting croce " + gameObject.transform.rotation.x);
         }
+    }
+
+    public void OpenDoorOne()
+    {
+        //if (canOpenDoor)
+        //{
+        doorParent = GameObject.FindGameObjectWithTag("DOORHOLDER");
+        Debug.Log("doorParent " + doorParent.transform.rotation.y);
+        doorParent.transform.Rotate(0f, 270f, 0f, Space.World);
+
+        //} else
+        //{
+        //    Debug.Log("doorcheck cannot open");
+        //}
     }
     
 }
