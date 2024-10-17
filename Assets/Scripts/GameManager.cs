@@ -18,11 +18,13 @@ public class GameManager : MonoBehaviour
     // Rule 6
     public GameObject croce;
     private Coroutine rotationCoroutine;
+    private Coroutine timerCoroutine;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        // Rule 2
         defaultIntensities = new float[candleLights.Length];
         for (int i = 0; i < candleLights.Length; i++)
         {
@@ -30,6 +32,7 @@ public class GameManager : MonoBehaviour
         }
         StartCoroutine(FlickerRoutine());
 
+        // Rule 6
         RotationCycle();
     }
 
@@ -39,6 +42,7 @@ public class GameManager : MonoBehaviour
 
     }
 
+    // Rule 2
     IEnumerator FlickerRoutine()
     {
         // Wait for the initial delay before starting (1 minute)
@@ -85,6 +89,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // Rule 6
     public void RotationCycle()
     {
         if (rotationCoroutine != null)
@@ -108,7 +113,36 @@ public class GameManager : MonoBehaviour
             {
                 croce.transform.Rotate(180f, 0f, 0f, Space.World);
                 Debug.Log("crrrr after " + croce.transform.eulerAngles.x);
+
+                if (timerCoroutine != null)
+                {
+                    StopCoroutine(timerCoroutine); // Stop any previous timer coroutine
+                }
+                timerCoroutine = StartCoroutine(StartTimer());
             }
         }
+    }
+
+    private IEnumerator StartTimer()
+    {
+        float timer = 10f; // Set the timer for 10 seconds
+        float initialRotationX = croce.transform.eulerAngles.x; // Store the initial x-rotation
+
+        while (timer > 0)
+        {
+            // Check if the rotation has changed externally
+            if (Mathf.Abs(croce.transform.eulerAngles.x - initialRotationX) > 0.1f)
+            {
+                Debug.Log("Rotation changed from outside. Resetting timer.");
+                yield break; // Exit the timer coroutine and reset the timer
+            }
+
+            timer -= Time.deltaTime; // Countdown the timer
+            yield return null; // Wait for the next frame
+        }
+
+        // If the timer completes without external rotation change, load a new scene
+        Debug.Log("10 seconds passed, loading new scene.");
+        //game over scene
     }
 }

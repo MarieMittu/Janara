@@ -6498,7 +6498,7 @@ MonoBehaviour:
   - {fileID: 19083197}
   flickerDuration: 0.5
   timeBetweenFlickers: 0.5
-  startDelay: 20
+  startDelay: 60
   intervalBetweenFlickerSets: 45
   croce: {fileID: 199799438}
 --- !u!1001 &2056473220
