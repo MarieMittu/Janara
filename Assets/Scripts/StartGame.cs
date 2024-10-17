@@ -44,6 +44,7 @@ public class StartGame : MonoBehaviour
         {
             //start timer night
             startNightDuration = nightDuration;
+            Destroy(other.gameObject);
         }
     }
 
