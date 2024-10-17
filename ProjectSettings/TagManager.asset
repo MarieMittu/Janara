@@ -18,6 +18,7 @@ TagManager:
   - Bathdoorholder
   - TIMER
   - LOCK
+  - LINE
   layers:
   - Default
   - TransparentFX
