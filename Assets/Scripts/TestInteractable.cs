@@ -15,6 +15,7 @@ public class TestInteractable : Interactable
     private GameObject doorParent;
     private GameObject bathDoorParent;
 
+
     private void Start()
     {
         interactAction.SetActive(false);
@@ -23,7 +24,10 @@ public class TestInteractable : Interactable
         eye.SetActive(true);
         exitBtn.SetActive(false);
         nanny.SetActive(true);
-        
+        if (gameObject.tag == "LOCK")
+        {
+            gameObject.SetActive(false);
+        }
     }
 
     public override void OnFocus()
@@ -190,13 +194,21 @@ public class TestInteractable : Interactable
 
         if (doorParent.transform.rotation.y <= 0)
         {
+            if (gameObject.tag == "LOCK")
+            {
+                gameObject.SetActive(false);
+            }
             doorParent.transform.Rotate(0f, 270f, 0f, Space.World);
             Debug.Log("doorParent a " + doorParent.transform.rotation.y);
-            //start night timer, see nixenrap
         } else
         {
             doorParent.transform.Rotate(0f, -270f, 0f, Space.World);
             Debug.Log("doorParent b " + doorParent.transform.rotation.y);
+            //activate lock
+            if (gameObject.tag == "LOCK")
+            {
+                gameObject.SetActive(true);
+            }
         }
         
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 20f;
     Vector3 velocity;
     public float gravity = -9.81f;
+    
 
     [SerializeField] private Vector3 interactionRayPoint = default;
     [SerializeField] private float interactionDistance = default;
@@ -17,42 +19,19 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private bool canInteract = true;
     [SerializeField] private KeyCode interactKey = KeyCode.Mouse0;
 
+    public Image[] keyholes;
+    public float fillSpeed = 1f; // Speed at which the image fills
+    private int currentKeyholeIndex = 0; // Index of the current image being filled
+    private bool spaceHeld = false; // Tracks if the spacebar is held down
+    private bool fillingInProgress = false;
+    private bool isFilling = true;
+
 
     // Start is called before the first frame update
     void Start()
     {
 
     }
-
-    //private void HandleInteractionCheck()
-    //{
-    //    Debug.Log("INTERCACTION start check " + interactionDistance);
-
-    //    Ray ray = playerCamera.ViewportPointToRay(interactionRayPoint);
-
-    //    // Visualize the ray in the Scene view (it will be visible for 1 second)
-    //    Debug.DrawRay(ray.origin, ray.direction * interactionDistance, Color.red, 1f);
-
-    //    if (Physics.Raycast(ray, out RaycastHit hit, interactionDistance))
-    //    {
-    //        Debug.Log("INTERCACTION 2 " + hit.collider.gameObject.name + "current is" + currentInteractable.name);
-    //        if (hit.collider.gameObject.layer == 6 && (currentInteractable == null || hit.collider.gameObject.GetInstanceID() != currentInteractable.GetInstanceID()))
-    //        {
-    //            Debug.Log("INTERCACTION 3 " + interactionDistance);
-    //            hit.collider.TryGetComponent(out currentInteractable);
-    //            if(currentInteractable)
-    //            {
-    //                Debug.Log("INTERCACTION 4 " + interactionDistance);
-    //                currentInteractable.OnFocus();
-    //            }
-    //        }
-    //    } else if (currentInteractable)
-    //    {
-    //        Debug.Log("NO MORE INTERCACTION");
-    //        currentInteractable.OnLoseFocus();
-    //        currentInteractable = null;
-    //    }
-    //}
 
     private void HandleInteractionCheck()
     {
@@ -117,7 +96,89 @@ public class PlayerMovement : MonoBehaviour
             HandleInteractionCheck();
             HandleInteractionInput();
         }
+
+        if (currentKeyholeIndex >= keyholes.Length && isFilling)
+        {
+            isFilling = false;
+            currentKeyholeIndex = keyholes.Length - 1;
+        }
+
+        if (isFilling)
+        {
+            HandleFilling();
+        }
+        else
+        {
+            HandleUnfilling();
+        }
     }
 
+    private void HandleFilling()
+    {
+        if (Input.GetKey(KeyCode.Space) && !spaceHeld && !fillingInProgress)
+        {
+            spaceHeld = true; // Track that spacebar is pressed
+            fillingInProgress = true; // Prevent further input until done
+            StartCoroutine(FillCurrentKeyhole());
+        }
 
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            spaceHeld = false; // Spacebar has been released, can press again
+        }
+    }
+
+    // Handle unfilling keyholes
+    private void HandleUnfilling()
+    {
+        if (Input.GetKey(KeyCode.Space) && !spaceHeld && !fillingInProgress)
+        {
+            spaceHeld = true; // Track that spacebar is pressed
+            fillingInProgress = true; // Prevent further input until done
+            StartCoroutine(UnfillCurrentKeyhole());
+        }
+
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            spaceHeld = false; // Spacebar has been released, can press again
+        }
+    }
+
+    private IEnumerator FillCurrentKeyhole()
+    {
+        Image currentKeyhole = keyholes[currentKeyholeIndex];
+
+        while (currentKeyhole.fillAmount < 1f)
+        {
+            // Gradually fill the image
+            currentKeyhole.fillAmount += fillSpeed * Time.deltaTime;
+            yield return null;
+        }
+
+        // Move to the next image after the current one is fully filled
+        currentKeyholeIndex++;
+        fillingInProgress = false; // Allow the next image to be filled after spacebar is released
+    }
+
+    private IEnumerator UnfillCurrentKeyhole()
+    {
+        Image currentKeyhole = keyholes[currentKeyholeIndex];
+
+        while (currentKeyhole.fillAmount > 0f)
+        {
+            currentKeyhole.fillAmount -= fillSpeed * Time.deltaTime;
+            yield return null;
+        }
+
+        // Move to the previous image after the current one is fully unfilled
+        currentKeyholeIndex--;
+        fillingInProgress = false; // Allow the next image to be unfilled after spacebar is released
+
+        // If we've unfilled all images, switch back to filling mode
+        if (currentKeyholeIndex < 0)
+        {
+            isFilling = true; // Switch back to filling mode
+            currentKeyholeIndex = 0; // Start from the first image again
+        }
+    }
 }
