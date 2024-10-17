@@ -916,8 +916,16 @@ PrefabInstance:
       value: mCandle (1)
       objectReference: {fileID: 0}
     - target: {fileID: 2626519130937806203, guid: aa3ab1849bd28014da9acd8ecf88048e, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2626519130937806203, guid: aa3ab1849bd28014da9acd8ecf88048e, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2626519130937806203, guid: aa3ab1849bd28014da9acd8ecf88048e, type: 3}
+      propertyPath: m_TagString
+      value: CANDLE
       objectReference: {fileID: 0}
     - target: {fileID: 3402633995490465729, guid: aa3ab1849bd28014da9acd8ecf88048e, type: 3}
       propertyPath: m_LocalScale.x
@@ -977,7 +985,13 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3402633995490465729, guid: aa3ab1849bd28014da9acd8ecf88048e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2006648327}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2626519130937806203, guid: aa3ab1849bd28014da9acd8ecf88048e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 396169980}
+    - targetCorrespondingSourceObject: {fileID: 2626519130937806203, guid: aa3ab1849bd28014da9acd8ecf88048e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 396169981}
   m_SourcePrefab: {fileID: 100100000, guid: aa3ab1849bd28014da9acd8ecf88048e, type: 3}
 --- !u!4 &228149460 stripped
 Transform:
@@ -1356,6 +1370,54 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 308807763}
   m_CullTransparentMesh: 1
+--- !u!1 &396169977 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2626519130937806203, guid: aa3ab1849bd28014da9acd8ecf88048e, type: 3}
+  m_PrefabInstance: {fileID: 228149459}
+  m_PrefabAsset: {fileID: 0}
+--- !u!136 &396169980
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 396169977}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 100.00002
+  m_Height: 2602.56
+  m_Direction: 1
+  m_Center: {x: -0.0000076293945, y: 1201.28, z: 0.0000038146986}
+--- !u!114 &396169981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 396169977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c14ee0867da54045b94fe17c43f2654, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactAction: {fileID: 308807763}
+  subCamera: {fileID: 0}
+  playerCamera: {fileID: 0}
+  eye: {fileID: 0}
+  exitBtn: {fileID: 0}
+  nanny: {fileID: 0}
+  letterView: {fileID: 0}
+  candleLight: {fileID: 2006648328}
 --- !u!1 &412630766
 GameObject:
   m_ObjectHideFlags: 0
@@ -4272,6 +4334,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: mCandle (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 2626519130937806203, guid: aa3ab1849bd28014da9acd8ecf88048e, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2626519130937806203, guid: aa3ab1849bd28014da9acd8ecf88048e, type: 3}
+      propertyPath: m_TagString
+      value: CANDLE
+      objectReference: {fileID: 0}
     - target: {fileID: 3402633995490465729, guid: aa3ab1849bd28014da9acd8ecf88048e, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.07081237
@@ -4330,7 +4400,13 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3402633995490465729, guid: aa3ab1849bd28014da9acd8ecf88048e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1424756897}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2626519130937806203, guid: aa3ab1849bd28014da9acd8ecf88048e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2110838261}
+    - targetCorrespondingSourceObject: {fileID: 2626519130937806203, guid: aa3ab1849bd28014da9acd8ecf88048e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2110838262}
   m_SourcePrefab: {fileID: 100100000, guid: aa3ab1849bd28014da9acd8ecf88048e, type: 3}
 --- !u!4 &1355499476 stripped
 Transform:
@@ -6416,9 +6492,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c375bf4e6b97549899a86b3e7f64218f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  candleLight: {fileID: 19083197}
-  maxInterval: 1
-  maxFlicker: 0.2
+  candleLights:
+  - {fileID: 2006648328}
+  - {fileID: 1424756898}
+  - {fileID: 19083197}
+  flickerDuration: 0.5
+  timeBetweenFlickers: 0.5
+  startDelay: 20
+  intervalBetweenFlickerSets: 45
   croce: {fileID: 199799438}
 --- !u!1001 &2056473220
 PrefabInstance:
@@ -6585,6 +6666,54 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 704494972}
   m_SourcePrefab: {fileID: 100100000, guid: aa3ab1849bd28014da9acd8ecf88048e, type: 3}
+--- !u!1 &2110838258 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2626519130937806203, guid: aa3ab1849bd28014da9acd8ecf88048e, type: 3}
+  m_PrefabInstance: {fileID: 1355499475}
+  m_PrefabAsset: {fileID: 0}
+--- !u!136 &2110838261
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2110838258}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 100.00002
+  m_Height: 2602.56
+  m_Direction: 1
+  m_Center: {x: 0.00023651123, y: 1201.28, z: 0.0009803772}
+--- !u!114 &2110838262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2110838258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c14ee0867da54045b94fe17c43f2654, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactAction: {fileID: 308807763}
+  subCamera: {fileID: 0}
+  playerCamera: {fileID: 0}
+  eye: {fileID: 0}
+  exitBtn: {fileID: 0}
+  nanny: {fileID: 0}
+  letterView: {fileID: 0}
+  candleLight: {fileID: 1424756898}
 --- !u!1 &2125126889 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1616070424767059238, guid: 7b8a6e52ae06cca499790406bb56eeaa, type: 3}

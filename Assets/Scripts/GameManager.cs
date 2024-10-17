@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,14 +6,14 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     // Rule 2
-    public Light candleLight;
-    public float maxInterval = 1;
-    public float maxFlicker = 0.2f;
+    public Light[] candleLights;
+    public float flickerDuration = 0.2f; // How long each flicker lasts
+    public float timeBetweenFlickers = 0.1f; // Time between the two flickers
+    public float startDelay = 60f; // Initial delay of 1 minute before starting flickers
+    public float intervalBetweenFlickerSets = 45f; // Time between each flicker set
 
-    float defaultIntensity;
-    bool isOn;
+    float[] defaultIntensities;
     float timer;
-    float delay;
 
     // Rule 6
     public GameObject croce;
@@ -22,7 +23,12 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        defaultIntensity = candleLight.intensity;
+        defaultIntensities = new float[candleLights.Length];
+        for (int i = 0; i < candleLights.Length; i++)
+        {
+            defaultIntensities[i] = candleLights[i].intensity; // Store the default intensity for each light
+        }
+        StartCoroutine(FlickerRoutine());
 
         RotationCycle();
     }
@@ -30,32 +36,53 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        timer += Time.deltaTime;
-        if (timer > delay)
-        {
-            FlickerCandle();
-        }
-
-      
 
     }
 
-    void FlickerCandle()
+    IEnumerator FlickerRoutine()
     {
-        isOn = !isOn;
+        // Wait for the initial delay before starting (1 minute)
+        yield return new WaitForSeconds(startDelay);
 
-        if (isOn)
+        while (true) // Infinite loop to keep repeating the flicker every 45 seconds
         {
-            candleLight.intensity = defaultIntensity;
-            delay = Random.Range(0, maxInterval);
-        }
-        else
-        {
-            candleLight.intensity = Random.Range(0.6f, defaultIntensity);
-            delay = Random.Range(0, maxFlicker);
-        }
+            // Flicker 1: Candle flickers down
+            FlickerOnce();
+            yield return new WaitForSeconds(flickerDuration);
 
-        timer = 0;
+            ResetToDefaultIntensity();
+
+            // Small pause between flickers
+            yield return new WaitForSeconds(timeBetweenFlickers);
+
+            // Flicker 2: Candle flickers down again
+            FlickerOnce();
+            yield return new WaitForSeconds(flickerDuration);
+
+            // Return the candle to the default intensity
+            ResetToDefaultIntensity();
+
+            // Wait for 45 seconds before the next flicker set
+            yield return new WaitForSeconds(intervalBetweenFlickerSets);
+        }
+    }
+
+    void FlickerOnce()
+    {
+        // Simulate a flicker by reducing the intensity
+        foreach (Light candleLight in candleLights)
+        {
+            candleLight.intensity = 0.1f;
+        }
+    }
+
+    void ResetToDefaultIntensity()
+    {
+        // Reset all lights to their default intensities
+        for (int i = 0; i < candleLights.Length; i++)
+        {
+            candleLights[i].intensity = defaultIntensities[i];
+        }
     }
 
     public void RotationCycle()
@@ -71,7 +98,7 @@ public class GameManager : MonoBehaviour
     {
         while (true)
         {
-            float randomInterval = Random.Range(0f, 120f);
+            float randomInterval = UnityEngine.Random.Range(0f, 120f);
 
             yield return new WaitForSeconds(randomInterval);
 
