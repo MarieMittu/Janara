@@ -18,6 +18,7 @@ public class StartGame : MonoBehaviour
     public GameObject clock;
     public GameObject clockArrow;
     public GameObject witchHolder;
+    public GameObject chick;
 
     // Start is called before the first frame update
     void Start()
@@ -78,10 +79,15 @@ public class StartGame : MonoBehaviour
 
             if (nightDuration <= 0)
             {
-
-                SceneManager.LoadScene("GameOverScene"); // change to normal
+                chick.SetActive(true);
+                Invoke("LoadSurvive", 4f);
             }
         }
+    }
+
+    void LoadSurvive()
+    {
+        SceneManager.LoadScene("SurvivedScene");
     }
 
     private void RemoveArrow()
@@ -91,6 +97,7 @@ public class StartGame : MonoBehaviour
 
     void LoadGO()
     {
+        Cursor.visible = true;
         SceneManager.LoadScene("GameOverScene");
     }
 

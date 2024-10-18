@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -18,13 +19,20 @@ public class GameManager : MonoBehaviour
 
     public bool witchReflects = false;
 
-    
+    //Rule 4
+    public float intervalBetweenFootsteps = 65f;
+    public GameObject footsteps;
+    private bool areSafe = false;
+    private bool hearFootsteps = false;
+    public GameObject witchHolder;
+
 
     // Rule 6
     public GameObject croce;
     private Coroutine rotationCoroutine;
     private Coroutine timerCoroutine;
-
+    public GameObject soundCroce;
+    public GameObject witchCroce;
 
     // Start is called before the first frame update
     void Start()
@@ -37,6 +45,11 @@ public class GameManager : MonoBehaviour
         }
         StartCoroutine(FlickerRoutine());
 
+        //Rule 4
+
+        StartCoroutine(FootstepsRoutine());
+        
+
         // Rule 6
         RotationCycle();
     }
@@ -44,7 +57,17 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(hearFootsteps && !areSafe)
+        {
+            witchHolder.SetActive(true);
+            Invoke("LoadGO", 3f);
+        }
+    }
 
+    void LoadGO()
+    {
+        Cursor.visible = true;
+        SceneManager.LoadScene("GameOverScene");
     }
 
     // Rule 2
@@ -98,6 +121,37 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    //Rule 4
+
+    IEnumerator FootstepsRoutine()
+    {
+        // Wait for the initial delay before starting (1 minute)
+        yield return new WaitForSeconds(startDelay);
+
+        while (true) // Infinite loop to keep repeating the flicker every 45 seconds
+        {
+            footsteps.SetActive(true);
+            hearFootsteps = true;
+            yield return new WaitForSeconds(37f);
+
+            foreach (Light candle in candleLights)
+            {
+                if (candle.intensity > 0)
+                {
+                    areSafe = false;
+                } else
+                {
+                    areSafe = true;
+                }
+            }
+
+            yield return new WaitForSeconds(2f);
+            hearFootsteps = false;
+            // Wait for 45 seconds before the next flicker set
+            yield return new WaitForSeconds(intervalBetweenFootsteps);
+        }
+    }
+
     // Rule 6
     public void RotationCycle()
     {
@@ -121,6 +175,7 @@ public class GameManager : MonoBehaviour
             if (Mathf.Abs(currentXRotation - 0f) < 0.1f || Mathf.Abs(currentXRotation - 360f) < 0.1f) 
             {
                 croce.transform.Rotate(180f, 0f, 0f, Space.World);
+                soundCroce.SetActive(true);
                 Debug.Log("crrrr after " + croce.transform.eulerAngles.x);
 
                 if (timerCoroutine != null)
@@ -153,5 +208,7 @@ public class GameManager : MonoBehaviour
         // If the timer completes without external rotation change, load a new scene
         Debug.Log("10 seconds passed, loading new scene.");
         //game over scene
+        witchCroce.SetActive(true);
+        Invoke("LoadGO", 3f);
     }
 }

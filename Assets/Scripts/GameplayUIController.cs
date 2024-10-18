@@ -5,6 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class GameplayUIController : MonoBehaviour
 {
+    private void Start()
+    {
+        Cursor.visible = true;
+    }
+
     public void RestartGame()
     {
         SceneManager.LoadScene("MainScene");
