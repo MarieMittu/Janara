@@ -18,6 +18,7 @@ public class TestInteractable : Interactable
     private GameObject bathDoorParent;
 
     public GameObject witchReflection;
+    public AudioSource doorAudioSource;
 
     private void Start()
     {
@@ -270,6 +271,10 @@ public class TestInteractable : Interactable
             }
             doorParent.transform.Rotate(0f, 270f, 0f, Space.World);
             Debug.Log("doorParent a " + doorParent.transform.rotation.y);
+            if (doorAudioSource != null)
+            {
+                doorAudioSource.Play();
+            }
         } else
         {
             doorParent.transform.Rotate(0f, -270f, 0f, Space.World);
@@ -278,6 +283,10 @@ public class TestInteractable : Interactable
             if (gameObject.tag == "LOCK")
             {
                 gameObject.SetActive(true);
+            }
+            if (doorAudioSource != null)
+            {
+                doorAudioSource.Play();
             }
         }
         
@@ -298,11 +307,19 @@ public class TestInteractable : Interactable
         {
             bathDoorParent.transform.Rotate(0f, 290f, 0f, Space.World);
             Debug.Log("bath doorParent open " + bathDoorParent.transform.rotation.y);
+            if (doorAudioSource != null)
+            {
+                doorAudioSource.Play();
+            }
         }
         else
         {
             bathDoorParent.transform.Rotate(0f, -290f, 0f, Space.World);
             Debug.Log("bath doorParent close " + bathDoorParent.transform.rotation.y);
+            if (doorAudioSource != null)
+            {
+                doorAudioSource.Play();
+            }
         }
 
 
