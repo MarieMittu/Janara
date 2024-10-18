@@ -106,7 +106,12 @@ public class TestInteractable : Interactable
         Cursor.visible = true;
         eye.SetActive(false);
         exitBtn.SetActive(true);
-        nanny.SetActive(false);
+        //nanny.SetActive(false);
+        PlayerMovement playerMovement = FindObjectOfType<PlayerMovement>(); // Find the player movement script
+        if (playerMovement != null)
+        {
+            playerMovement.SetMovementState(false); // Disable movement
+        }
 
         ActivateExitButton(ExitSubscene);
     }
@@ -119,7 +124,12 @@ public class TestInteractable : Interactable
         Cursor.visible = false;
         eye.SetActive(true);
         exitBtn.SetActive(false);
-        nanny.SetActive(true);
+        //nanny.SetActive(true);
+        PlayerMovement playerMovement = FindObjectOfType<PlayerMovement>(); // Find the player movement script
+        if (playerMovement != null)
+        {
+            playerMovement.SetMovementState(true); // Disable movement
+        }
     }
 
      void ActivateExitButton(Action method)

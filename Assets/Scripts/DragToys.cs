@@ -11,6 +11,9 @@ public class DragToys : MonoBehaviour
     private Vector3 offset;
     private float fixedY;
 
+    private bool toysAligned = false;
+    private HashSet<GameObject> objectsInTrigger = new HashSet<GameObject>();
+
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
@@ -62,5 +65,78 @@ public class DragToys : MonoBehaviour
         curPosition.y = fixedY;
         selectedObject.transform.position = curPosition;
 
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("LINE"))
+        {
+            // Log the object currently inside the trigger
+            Debug.Log("LINE Currently inside trigger: " + other.gameObject.name);
+
+            // Add the object to the HashSet if it's one of the draggable objects
+            if (System.Array.Exists(draggableObjects, obj => obj == selectedObject))
+            {
+                // Add the selected object to the HashSet
+                objectsInTrigger.Add(selectedObject);
+                Debug.Log("LINE Added to trigger: " + selectedObject.name);
+
+                // Check if all draggable objects are inside the trigger
+                if (objectsInTrigger.Count == draggableObjects.Length)
+                {
+                    // All draggable objects are in the trigger
+                    Debug.Log("LINE All draggable objects are inside the trigger!");
+                    toysAligned = true; // Set aligned flag
+                }
+            }
+        }
+    }
+
+    //private void OnTriggerStay(Collider other)
+    //{
+    //    if (other.CompareTag("LINE"))
+    //    {
+    //        // Log the object currently inside the trigger
+    //        Debug.Log("LINE Currently inside trigger: " + other.gameObject.name);
+
+    //        // Add the object to the HashSet if it's one of the draggable objects
+    //        if (System.Array.Exists(draggableObjects, obj => obj == selectedObject))
+    //        {
+    //            // Add the selected object to the HashSet
+    //            objectsInTrigger.Add(selectedObject);
+    //            Debug.Log("LINE Added to trigger: " + selectedObject.name);
+
+    //            // Check if all draggable objects are inside the trigger
+    //            if (objectsInTrigger.Count == draggableObjects.Length)
+    //            {
+    //                // All draggable objects are in the trigger
+    //                Debug.Log("LINE All draggable objects are inside the trigger!");
+    //                toysAligned = true; // Set aligned flag
+    //            }
+    //        }
+    //    }
+    //}
+
+    private void OnTriggerExit(Collider other)
+    {
+        // If an object leaves the trigger, check if it is one of the draggable objects
+        if (other.CompareTag("LINE"))
+        {
+            // Log the object that has exited the trigger
+            Debug.Log($"{other.gameObject.name} has exited the trigger.");
+
+            // Remove the selected object from the HashSet if it exists
+            if (objectsInTrigger.Remove(selectedObject))
+            {
+                Debug.Log($"Removed {selectedObject.name} from the trigger.");
+            }
+
+            // Check if not all draggable objects are in the trigger
+            if (objectsInTrigger.Count < draggableObjects.Length)
+            {
+                Debug.Log("Not all draggable objects are inside the trigger anymore.");
+                toysAligned = false; // Reset aligned flag
+            }
+        }
     }
 }
