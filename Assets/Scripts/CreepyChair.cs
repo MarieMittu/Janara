@@ -10,10 +10,13 @@ public class CreepyChair : MonoBehaviour
     public float rotationSpeed = 30f; 
 
     private bool isRotating = false;
+    private AudioSource audioSource;
 
     // Start is called before the first frame update
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+
         StartCoroutine(RotateObjectRandomly());
     }
 
@@ -32,6 +35,11 @@ public class CreepyChair : MonoBehaviour
 
     private IEnumerator RotateBackAndForth()
     {
+        if (audioSource != null)
+        {
+            audioSource.Play();
+        }
+
         float randomDuration = Random.Range(5f, 10f); 
         float elapsedTime = 0f;
 

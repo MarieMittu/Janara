@@ -11,6 +11,8 @@ public class PlayerMovement : MonoBehaviour
     Vector3 velocity;
     public float gravity = -9.81f;
     public bool canMove = true;
+    public AudioClip footstepSound; // Single footstep sound clip
+    private AudioSource audioSource;
 
 
     [SerializeField] private Vector3 interactionRayPoint = default;
@@ -26,20 +28,32 @@ public class PlayerMovement : MonoBehaviour
     private bool spaceHeld = false; // Tracks if the spacebar is held down
     private bool fillingInProgress = false;
     private bool isFilling = true;
-
+    public bool doorLocked = false;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        audioSource = GetComponent<AudioSource>();
+        audioSource.clip = footstepSound; // Set the footstep sound clip
+        audioSource.loop = true;
+        audioSource.playOnAwake = false;
     }
+
 
     private void HandleInteractionCheck()
     {
         Debug.Log("INTERACTION start check " + interactionDistance);
+        GameManager gm = FindObjectOfType<GameManager>();
+        if (gm != null && gm.witchReflects == true)
+        {
+            interactionDistance = 10f;
+        } else if (gm != null && gm.witchReflects == false)
+        {
+            interactionDistance = 3f;
+        }
 
-        // Create the ray directly from the camera's forward direction
-        Ray ray = playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)); // center of the screen
+            // Create the ray directly from the camera's forward direction
+            Ray ray = playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)); // center of the screen
         Debug.DrawRay(ray.origin, ray.direction * interactionDistance, Color.red, 2f); // Visible for 2 seconds
 
         // Perform a simple raycast with no conditions
@@ -91,15 +105,28 @@ public class PlayerMovement : MonoBehaviour
         if (canMove)
         {
             float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
+            float z = Input.GetAxis("Vertical");
 
          
             Vector3 move = transform.right * x + transform.forward * z;
-        controller.Move(move * speed * Time.deltaTime);
+            controller.Move(move * speed * Time.deltaTime);
 
-        velocity.y += gravity * Time.deltaTime;
-        controller.Move(velocity * Time.deltaTime);
-    }
+            velocity.y += gravity * Time.deltaTime;
+            controller.Move(velocity * Time.deltaTime);
+
+            //if (move.magnitude > 0)
+            //{
+            //    audioSource.Play(); // Start playing the footstep sound
+            //    Debug.Log("audioSource.Play");
+            //}
+            //else if (audioSource.isPlaying)
+            //{
+            //    audioSource.Stop(); // Stop the footstep sound
+            //}
+        }
+      
+
+
         if (canInteract)
         {
             Debug.Log("INTERCACTION come on");
@@ -111,6 +138,16 @@ public class PlayerMovement : MonoBehaviour
         {
             isFilling = false;
             currentKeyholeIndex = keyholes.Length - 1;
+            
+        }
+
+        if (currentKeyholeIndex >= keyholes.Length)
+        {
+            //door locked
+            doorLocked = true;
+        } else
+        {
+            doorLocked = false;
         }
 
         if (isFilling)

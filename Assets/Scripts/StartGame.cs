@@ -8,16 +8,21 @@ using UnityEngine.UI;
 public class StartGame : MonoBehaviour
 {
 
-    public float nightDuration = 60f;
+    public float nightDuration = 480f;
     public float startNightDuration;
     float secondTimer = 0f;
 
     public Image nightTimer;
     private bool timerStarted = false;
 
+    public GameObject clock;
+    public GameObject clockArrow;
+
+
     // Start is called before the first frame update
     void Start()
     {
+
         if (nightTimer != null)
         {
             float initialFillAmount = 0.67f; // Set your initial fill amount
@@ -45,10 +50,26 @@ public class StartGame : MonoBehaviour
                 {
                     nightTimer.fillAmount = Mathf.Clamp(nightDuration / startNightDuration, 0f, 1f);
                     UnityEngine.Debug.Log("TIMERRR Updated Fill Amount: " + nightTimer.fillAmount);
+
+                    if (nightTimer.fillAmount <= 0.52 && nightTimer.fillAmount >= 0.49)
+                    {
+                        UnityEngine.Debug.Log("MIDNIGHT");
+
+                        clockArrow.SetActive(true);
+                        Invoke("RemoveArrow", 15f);
+
+                        PlayerMovement pm = FindObjectOfType<PlayerMovement>();
+                        if (pm != null && pm.doorLocked == false)
+                        {
+                            //game over
+                        }
+                    }
                 }
             }
 
+            
 
+              
 
             if (nightDuration <= 0)
             {
@@ -57,6 +78,13 @@ public class StartGame : MonoBehaviour
             }
         }
     }
+
+    private void RemoveArrow()
+    {
+        Destroy(clockArrow);
+    }
+
+
 
     private void OnTriggerEnter(Collider other)
     {
