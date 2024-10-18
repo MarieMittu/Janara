@@ -33,12 +33,18 @@ public class CreepyChair : MonoBehaviour
         }
     }
 
-    private IEnumerator RotateBackAndForth()
+    void Screeeeep()
     {
         if (audioSource != null)
         {
             audioSource.Play();
         }
+    }
+
+    private IEnumerator RotateBackAndForth()
+    {
+        Screeeeep();
+        Invoke("Screeeeep", 2f);
 
         float randomDuration = Random.Range(5f, 10f); 
         float elapsedTime = 0f;

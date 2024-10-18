@@ -17,7 +17,7 @@ public class StartGame : MonoBehaviour
 
     public GameObject clock;
     public GameObject clockArrow;
-
+    public GameObject witchHolder;
 
     // Start is called before the first frame update
     void Start()
@@ -54,15 +54,20 @@ public class StartGame : MonoBehaviour
                     if (nightTimer.fillAmount <= 0.52 && nightTimer.fillAmount >= 0.49)
                     {
                         UnityEngine.Debug.Log("MIDNIGHT");
-
                         clockArrow.SetActive(true);
-                        Invoke("RemoveArrow", 15f);
-
                         PlayerMovement pm = FindObjectOfType<PlayerMovement>();
                         if (pm != null && pm.doorLocked == false)
                         {
                             //game over
+                            UnityEngine.Debug.Log("MIDNIGHT game over " + pm.doorLocked);
+                            witchHolder.SetActive(true);
+                            Invoke("LoadGO", 3f);
+
                         }
+                        
+                        Invoke("RemoveArrow", 15f);
+
+                        
                     }
                 }
             }
@@ -84,6 +89,10 @@ public class StartGame : MonoBehaviour
         Destroy(clockArrow);
     }
 
+    void LoadGO()
+    {
+        SceneManager.LoadScene("GameOverScene");
+    }
 
 
     private void OnTriggerEnter(Collider other)

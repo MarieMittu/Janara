@@ -141,13 +141,15 @@ public class PlayerMovement : MonoBehaviour
             
         }
 
-        if (currentKeyholeIndex >= keyholes.Length)
+        if (currentKeyholeIndex >= keyholes.Length - 1)
         {
             //door locked
+            Debug.Log("LOCKLOCK " + doorLocked + " " + currentKeyholeIndex + " " + " " + keyholes.Length);
             doorLocked = true;
         } else
         {
             doorLocked = false;
+            Debug.Log("NO LOCKLOCK " + doorLocked + " " + currentKeyholeIndex + " " + " " + keyholes.Length);
         }
 
         if (isFilling)
