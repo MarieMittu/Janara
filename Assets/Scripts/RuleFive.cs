@@ -25,23 +25,27 @@ public class RuleFive : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (startControl)
+        if (GameManager.instance.currentLevel == 3)
         {
-            if (!isGuarding && timeRemaining > 0)
-            {
-                timeRemaining -= Time.deltaTime;
-                //Debug.Log("GUARDA here" + timeRemaining);
-            }
 
-            if (timeRemaining < 1)
+
+            if (startControl)
             {
-                ShowBed();
-                Invoke("ShowHand", 2f);
-                Invoke("DestroyBaby", 4f);
-                Invoke("LoadGO", 9f);
+                if (!isGuarding && timeRemaining > 0)
+                {
+                    timeRemaining -= Time.deltaTime;
+                    //Debug.Log("GUARDA here" + timeRemaining);
+                }
+
+                if (timeRemaining < 1)
+                {
+                    ShowBed();
+                    Invoke("ShowHand", 2f);
+                    Invoke("DestroyBaby", 4f);
+                    Invoke("LoadGO", 9f);
+                }
             }
         }
-
     }
 
     public void ShowBed()
@@ -77,6 +81,7 @@ public class RuleFive : MonoBehaviour
 
         void OnTriggerEnter(Collider other)
         {
+
             if (other.CompareTag("TIMER"))
             {
                 startControl = true;
@@ -84,20 +89,30 @@ public class RuleFive : MonoBehaviour
             else
                 if (other.CompareTag("GUARDA"))
             {
+            if (GameManager.instance.currentLevel == 3)
+            {
+
+
                 //stop and reset countdown
                 Debug.Log("GUARDA okay");
                 isGuarding = true;
                 timeRemaining = 10;
             }
+            }
         }
 
         void OnTriggerExit(Collider other)
         {
+        if (GameManager.instance.currentLevel == 3)
+        {
+
+
             if (other.CompareTag("GUARDA"))
             {
                 //start countdown
                 Debug.Log("GUARDA madonnna");
                 isGuarding = false;
             }
+        }
         }
     }

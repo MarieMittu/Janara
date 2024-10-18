@@ -1,12 +1,17 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager instance; // Singleton instance to access GameManager globally
+    public int currentLevel = 1; // Default level is 1
+    public int maxLevels = 3;
+
     // Rule 2
     public Light[] candleLights;
     public float flickerDuration = 0.2f; // How long each flicker lasts
@@ -34,34 +39,82 @@ public class GameManager : MonoBehaviour
     public GameObject soundCroce;
     public GameObject witchCroce;
 
+    private void Awake()
+    {
+        // Ensure there's only one instance of GameManager
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject); // Don't destroy the GameManager between scenes
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    public void SetLevel(int level)
+    {
+        if (level > 0 && level <= maxLevels)
+        {
+            currentLevel = level;
+        }
+        else
+        {
+        }
+    }
+
+    public void NextLevel()
+    {
+        if (currentLevel < maxLevels)
+        {
+            currentLevel++;
+        }
+        else
+        {
+        }
+    }
+
+
+
     // Start is called before the first frame update
     void Start()
     {
-        // Rule 2
-        defaultIntensities = new float[candleLights.Length];
-        for (int i = 0; i < candleLights.Length; i++)
+        if (currentLevel == 1)
         {
-            defaultIntensities[i] = candleLights[i].intensity; // Store the default intensity for each light
+            // Rule 2 
+            defaultIntensities = new float[candleLights.Length];
+            for (int i = 0; i < candleLights.Length; i++)
+            {
+                defaultIntensities[i] = candleLights[i].intensity; // Store the default intensity for each light
+            }
+            StartCoroutine(FlickerRoutine());
+        } else if (currentLevel == 2)
+        {
+            //Rule 4
+
+            StartCoroutine(FootstepsRoutine());
         }
-        StartCoroutine(FlickerRoutine());
-
-        //Rule 4
-
-        StartCoroutine(FootstepsRoutine());
-        
-
-        // Rule 6
-        RotationCycle();
+        else if (currentLevel == 3)
+        {
+            // Rule 6
+            RotationCycle();
+        }
+   
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(hearFootsteps && !areSafe)
+        if (currentLevel == 2)
         {
-            witchHolder.SetActive(true);
-            Invoke("LoadGO", 3f);
+            if (hearFootsteps && !areSafe)
+            {
+                witchHolder.SetActive(true);
+                Invoke("LoadGO", 3f);
+            }
         }
+            
     }
 
     void LoadGO()
@@ -73,33 +126,38 @@ public class GameManager : MonoBehaviour
     // Rule 2
     IEnumerator FlickerRoutine()
     {
-        // Wait for the initial delay before starting (1 minute)
-        yield return new WaitForSeconds(startDelay);
-
-        while (true) // Infinite loop to keep repeating the flicker every 45 seconds
+        if (currentLevel == 1)
         {
-            // Flicker 1: Candle flickers down
-            FlickerOnce();
-            yield return new WaitForSeconds(flickerDuration);
 
-            ResetToDefaultIntensity();
 
-            // Small pause between flickers
-            yield return new WaitForSeconds(timeBetweenFlickers);
+            // Wait for the initial delay before starting (1 minute)
+            yield return new WaitForSeconds(startDelay);
 
-            // Flicker 2: Candle flickers down again
-            FlickerOnce();
-            yield return new WaitForSeconds(flickerDuration);
+            while (true) // Infinite loop to keep repeating the flicker every 45 seconds
+            {
+                // Flicker 1: Candle flickers down
+                FlickerOnce();
+                yield return new WaitForSeconds(flickerDuration);
 
-            // Return the candle to the default intensity
-            ResetToDefaultIntensity();
+                ResetToDefaultIntensity();
 
-            witchReflects = true;
-            yield return new WaitForSeconds(10);
-            witchReflects = false;
+                // Small pause between flickers
+                yield return new WaitForSeconds(timeBetweenFlickers);
 
-            // Wait for 45 seconds before the next flicker set
-            yield return new WaitForSeconds(intervalBetweenFlickerSets);
+                // Flicker 2: Candle flickers down again
+                FlickerOnce();
+                yield return new WaitForSeconds(flickerDuration);
+
+                // Return the candle to the default intensity
+                ResetToDefaultIntensity();
+
+                witchReflects = true;
+                yield return new WaitForSeconds(10);
+                witchReflects = false;
+
+                // Wait for 45 seconds before the next flicker set
+                yield return new WaitForSeconds(intervalBetweenFlickerSets);
+            }
         }
     }
 
@@ -125,30 +183,36 @@ public class GameManager : MonoBehaviour
 
     IEnumerator FootstepsRoutine()
     {
-        // Wait for the initial delay before starting (1 minute)
-        yield return new WaitForSeconds(startDelay);
-
-        while (true) // Infinite loop to keep repeating the flicker every 45 seconds
+        if (currentLevel == 2)
         {
-            footsteps.SetActive(true);
-            hearFootsteps = true;
-            yield return new WaitForSeconds(37f);
 
-            foreach (Light candle in candleLights)
+
+            // Wait for the initial delay before starting (1 minute)
+            yield return new WaitForSeconds(startDelay);
+
+            while (true) // Infinite loop to keep repeating the flicker every 45 seconds
             {
-                if (candle.intensity > 0)
-                {
-                    areSafe = false;
-                } else
-                {
-                    areSafe = true;
-                }
-            }
+                footsteps.SetActive(true);
+                hearFootsteps = true;
+                yield return new WaitForSeconds(37f);
 
-            yield return new WaitForSeconds(2f);
-            hearFootsteps = false;
-            // Wait for 45 seconds before the next flicker set
-            yield return new WaitForSeconds(intervalBetweenFootsteps);
+                foreach (Light candle in candleLights)
+                {
+                    if (candle.intensity > 0)
+                    {
+                        areSafe = false;
+                    }
+                    else
+                    {
+                        areSafe = true;
+                    }
+                }
+
+                yield return new WaitForSeconds(2f);
+                hearFootsteps = false;
+                // Wait for 45 seconds before the next flicker set
+                yield return new WaitForSeconds(intervalBetweenFootsteps);
+            }
         }
     }
 
@@ -164,25 +228,28 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator ChangeCroceRotation()
     {
-        while (true)
+        if (currentLevel == 3)
         {
-            float randomInterval = UnityEngine.Random.Range(0f, 120f);
 
-            yield return new WaitForSeconds(randomInterval);
 
-            float currentXRotation = croce.transform.eulerAngles.x;
-            Debug.Log("crrrr before " + currentXRotation);
-            if (Mathf.Abs(currentXRotation - 0f) < 0.1f || Mathf.Abs(currentXRotation - 360f) < 0.1f) 
+            while (true)
             {
-                croce.transform.Rotate(180f, 0f, 0f, Space.World);
-                soundCroce.SetActive(true);
-                Debug.Log("crrrr after " + croce.transform.eulerAngles.x);
+                float randomInterval = UnityEngine.Random.Range(0f, 120f);
 
-                if (timerCoroutine != null)
+                yield return new WaitForSeconds(randomInterval);
+
+                float currentXRotation = croce.transform.eulerAngles.x;
+                if (Mathf.Abs(currentXRotation - 0f) < 0.1f || Mathf.Abs(currentXRotation - 360f) < 0.1f)
                 {
-                    StopCoroutine(timerCoroutine); // Stop any previous timer coroutine
+                    croce.transform.Rotate(180f, 0f, 0f, Space.World);
+                    soundCroce.SetActive(true);
+
+                    if (timerCoroutine != null)
+                    {
+                        StopCoroutine(timerCoroutine); // Stop any previous timer coroutine
+                    }
+                    timerCoroutine = StartCoroutine(StartTimer());
                 }
-                timerCoroutine = StartCoroutine(StartTimer());
             }
         }
     }
@@ -197,7 +264,6 @@ public class GameManager : MonoBehaviour
             // Check if the rotation has changed externally
             if (Mathf.Abs(croce.transform.eulerAngles.x - initialRotationX) > 0.1f)
             {
-                Debug.Log("Rotation changed from outside. Resetting timer.");
                 yield break; // Exit the timer coroutine and reset the timer
             }
 
@@ -206,7 +272,6 @@ public class GameManager : MonoBehaviour
         }
 
         // If the timer completes without external rotation change, load a new scene
-        Debug.Log("10 seconds passed, loading new scene.");
         //game over scene
         witchCroce.SetActive(true);
         Invoke("LoadGO", 3f);

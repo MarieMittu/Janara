@@ -153,6 +153,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 878019414}
+  - {fileID: 665857080}
+  - {fileID: 165523741}
   m_Father: {fileID: 73392268}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -925,6 +927,81 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6f9a01fd1d2bf3b408f6fe44c93f4ed2, type: 3}
+--- !u!1 &165523740
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 165523741}
+  - component: {fileID: 165523743}
+  - component: {fileID: 165523742}
+  m_Layer: 5
+  m_Name: Letter 3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &165523741
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 165523740}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 10103075}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -46.669067, y: -31.7229}
+  m_SizeDelta: {x: 512.4941, y: 393.0074}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &165523742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 165523740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.9716981, g: 0.9686131, b: 0.9579477, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 106360eec119b4864ba79db77e007522, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &165523743
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 165523740}
+  m_CullTransparentMesh: 1
 --- !u!1 &199799438
 GameObject:
   m_ObjectHideFlags: 0
@@ -1000,6 +1077,7 @@ MonoBehaviour:
   exitBtn: {fileID: 0}
   nanny: {fileID: 0}
   letterView: {fileID: 0}
+  lettersRules: []
   candleLight: {fileID: 0}
   witchReflection: {fileID: 0}
 --- !u!1 &219768899
@@ -1855,6 +1933,7 @@ MonoBehaviour:
   exitBtn: {fileID: 0}
   nanny: {fileID: 0}
   letterView: {fileID: 0}
+  lettersRules: []
   candleLight: {fileID: 2006648328}
   witchReflection: {fileID: 0}
 --- !u!1 &412630766
@@ -2406,6 +2485,7 @@ MonoBehaviour:
   exitBtn: {fileID: 0}
   nanny: {fileID: 0}
   letterView: {fileID: 0}
+  lettersRules: []
   candleLight: {fileID: 0}
   witchReflection: {fileID: 0}
 --- !u!65 &511892326
@@ -2987,6 +3067,81 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 433245689}
   m_SourcePrefab: {fileID: 100100000, guid: 5b55e3e6158a55549a4a3dd6ad23ca37, type: 3}
+--- !u!1 &665857079
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 665857080}
+  - component: {fileID: 665857082}
+  - component: {fileID: 665857081}
+  m_Layer: 5
+  m_Name: Letter 2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &665857080
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 665857079}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 10103075}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -46.669067, y: -31.7229}
+  m_SizeDelta: {x: 512.4941, y: 393.0074}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &665857081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 665857079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.26870975, g: 0.09313814, b: 0.8584906, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 106360eec119b4864ba79db77e007522, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &665857082
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 665857079}
+  m_CullTransparentMesh: 1
 --- !u!1001 &688570409
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3134,6 +3289,7 @@ MonoBehaviour:
   exitBtn: {fileID: 0}
   nanny: {fileID: 0}
   letterView: {fileID: 0}
+  lettersRules: []
   candleLight: {fileID: 19083197}
   witchReflection: {fileID: 0}
 --- !u!1 &737034708
@@ -3644,7 +3800,7 @@ GameObject:
   - component: {fileID: 878019416}
   - component: {fileID: 878019415}
   m_Layer: 5
-  m_Name: Letter
+  m_Name: Letter 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3682,7 +3838,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.9716981, g: 0.9686131, b: 0.9579477, a: 1}
+  m_Color: {r: 0.8207547, g: 0.2719718, b: 0.08904416, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -4737,7 +4893,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!108 &1038174343
 Light:
   m_ObjectHideFlags: 0
@@ -5252,6 +5408,7 @@ MonoBehaviour:
   exitBtn: {fileID: 0}
   nanny: {fileID: 0}
   letterView: {fileID: 0}
+  lettersRules: []
   candleLight: {fileID: 0}
   witchReflection: {fileID: 0}
 --- !u!1 &1155883687
@@ -6278,6 +6435,7 @@ MonoBehaviour:
   exitBtn: {fileID: 0}
   nanny: {fileID: 0}
   letterView: {fileID: 0}
+  lettersRules: []
   candleLight: {fileID: 0}
   witchReflection: {fileID: 0}
 --- !u!1001 &1355499475
@@ -6573,6 +6731,7 @@ MonoBehaviour:
   exitBtn: {fileID: 0}
   nanny: {fileID: 0}
   letterView: {fileID: 0}
+  lettersRules: []
   candleLight: {fileID: 0}
   witchReflection: {fileID: 0}
 --- !u!65 &1390763869
@@ -6954,6 +7113,7 @@ MonoBehaviour:
   exitBtn: {fileID: 785792829}
   nanny: {fileID: 254839340}
   letterView: {fileID: 0}
+  lettersRules: []
   candleLight: {fileID: 0}
   witchReflection: {fileID: 0}
 --- !u!65 &1463177216
@@ -8038,6 +8198,7 @@ MonoBehaviour:
   exitBtn: {fileID: 785792829}
   nanny: {fileID: 254839340}
   letterView: {fileID: 0}
+  lettersRules: []
   candleLight: {fileID: 0}
   witchReflection: {fileID: 0}
 --- !u!1 &1787092891
@@ -9268,6 +9429,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6864067955330321462, guid: a567b17cfa2783842b7985352594f88a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1938590826}
+    - targetCorrespondingSourceObject: {fileID: 6864067955330321462, guid: a567b17cfa2783842b7985352594f88a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1938590827}
   m_SourcePrefab: {fileID: 100100000, guid: a567b17cfa2783842b7985352594f88a, type: 3}
 --- !u!4 &1938590822 stripped
 Transform:
@@ -9286,6 +9450,107 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c53547b0571b74ce88bb21176acd2326, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioSource: {fileID: 1938590827}
+  maxVolume: 0.5
+  minVolume: 0
+  timeAtMaxVolume: 10
+  timeAtMinVolume: 30
+--- !u!82 &1938590827
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 43446177}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 608cc7df7eb40495f804cca5f4fd2806, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1962396875 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4110229394887729705, guid: 42c55fd0b096938479f90949487422c7, type: 3}
@@ -9310,6 +9575,7 @@ MonoBehaviour:
   exitBtn: {fileID: 0}
   nanny: {fileID: 0}
   letterView: {fileID: 0}
+  lettersRules: []
   candleLight: {fileID: 0}
   witchReflection: {fileID: 988049868}
 --- !u!1 &1968171817
@@ -9329,7 +9595,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1968171818
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9819,6 +10085,10 @@ MonoBehaviour:
   exitBtn: {fileID: 785792829}
   nanny: {fileID: 0}
   letterView: {fileID: 10103074}
+  lettersRules:
+  - {fileID: 878019413}
+  - {fileID: 665857079}
+  - {fileID: 165523740}
   candleLight: {fileID: 0}
   witchReflection: {fileID: 0}
 --- !u!1 &2051618438
@@ -9865,6 +10135,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c375bf4e6b97549899a86b3e7f64218f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentLevel: 1
+  maxLevels: 3
   candleLights:
   - {fileID: 2006648328}
   - {fileID: 1424756898}
@@ -10224,6 +10496,7 @@ MonoBehaviour:
   exitBtn: {fileID: 0}
   nanny: {fileID: 0}
   letterView: {fileID: 0}
+  lettersRules: []
   candleLight: {fileID: 1424756898}
   witchReflection: {fileID: 0}
 --- !u!1 &2125126889 stripped

@@ -19,4 +19,20 @@ public class GameplayUIController : MonoBehaviour
     {
         SceneManager.LoadScene("StartScene");
     }
+
+    public void ContinueNext()
+    {
+        GameManager.instance.NextLevel();
+        SceneManager.LoadScene("MainScene");
+    }
+
+    public void FinalVictory()
+    {
+        SceneManager.LoadScene("VictoryScene");
+    }
+
+    public void FinalDeath()
+    {
+        SceneManager.LoadScene("DeathScene");
+    }
 }

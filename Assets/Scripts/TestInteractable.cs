@@ -9,6 +9,7 @@ using UnityEngine.SceneManagement;
 public class TestInteractable : Interactable
 {
     [SerializeField] GameObject letterView;
+    [SerializeField] GameObject[] lettersRules;
     [SerializeField] Light candleLight;
 
     private TMP_Text interactText;
@@ -37,7 +38,7 @@ public class TestInteractable : Interactable
     {
         Debug.Log("LOOKING AT " + gameObject.name);
 
-        if (gameObject.tag == "MIRROR")
+        if (gameObject.tag == "MIRROR" && GameManager.instance.currentLevel == 1)
         {
             ShowWitch();
         }
@@ -51,15 +52,26 @@ public class TestInteractable : Interactable
         //    interactAction.SetActive(false);
         //    Debug.Log("doorcheck no action " + canOpenDoor);
         //}
-        else
+        else if (gameObject.tag == "LOCK" && GameManager.instance.currentLevel == 1)
         {
             interactAction.SetActive(true);
             Debug.Log("what croce two " + gameObject.transform.rotation.x);
+        } else if ((gameObject.tag == "TOYS" || gameObject.tag == "CANDLE") && GameManager.instance.currentLevel == 2)
+        {
+            interactAction.SetActive(true);
         }
-            
-        
+        else if ((gameObject.tag == "CROCE" || gameObject.tag == "WITCH") && GameManager.instance.currentLevel == 3)
+        {
+            interactAction.SetActive(true);
+        } else if (gameObject.tag == "BED" || gameObject.tag == "LETTER" || gameObject.tag == "DOORONE" || gameObject.tag == "DOORTWO")
+        {
+            interactAction.SetActive(true);
+        }
 
-        
+
+
+
+
     }
 
     public override void OnInteract()
@@ -72,17 +84,28 @@ public class TestInteractable : Interactable
             case "BED":
                 EnterSubscene();
                 break;
-            case "TOYS":    
-                EnterSubscene();
+            case "TOYS":
+                if (GameManager.instance.currentLevel == 2)
+                {
+                    EnterSubscene();
+                }
+                
                 break;
             case "LETTER":
                 ShowLetter();
                 break;
             case "CANDLE":
-                SwitchLight();
+                if (GameManager.instance.currentLevel == 2)
+                {
+                    SwitchLight();
+                }
+                    
                 break;
             case "CROCE":
-                TurnCroce();
+                if (GameManager.instance.currentLevel == 3)
+                {
+                    TurnCroce();
+                }
                 break;
             case "DOORONE":
                 OpenDoorOne();
@@ -91,7 +114,11 @@ public class TestInteractable : Interactable
                 OpenDoorTwo();
                 break;
             case "WITCH":
-                SceneManager.LoadScene("FinalScene");
+                if (GameManager.instance.currentLevel == 3)
+                {
+                    SceneManager.LoadScene("FinalScene");
+                }
+                    
                 break;
  
                 
@@ -157,12 +184,26 @@ public class TestInteractable : Interactable
     {
         exitBtn.SetActive(true);
         ActivateExitButton(HideLetter);
+
+        // Hide all letter rules first
+        foreach (GameObject letter in lettersRules)
+        {
+            letter.SetActive(false);
+        }
+
+        // Show the letter corresponding to the current level
+        int currentLevel = GameManager.instance.currentLevel;
+        if (currentLevel >= 1 && currentLevel <= lettersRules.Length)
+        {
+            lettersRules[currentLevel - 1].SetActive(true); // Activate letter for the current level
+        }
+
         letterView.SetActive(true);
         Time.timeScale = 0f;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
-        
     }
+
 
     public void HideLetter()
     {

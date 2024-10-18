@@ -57,6 +57,7 @@ public class StartGame : MonoBehaviour
                     {
                         UnityEngine.Debug.Log("MIDNIGHT");
                         clockArrow.SetActive(true);
+                        if (GameManager.instance.currentLevel == 1) { }
                         PlayerMovement pm = FindObjectOfType<PlayerMovement>();
                         if (pm != null && pm.doorLocked == false)
                         {
@@ -66,7 +67,7 @@ public class StartGame : MonoBehaviour
                             Invoke("LoadGO", 3f);
 
                         }
-                        
+                    }
                         Invoke("RemoveArrow", 15f);
 
                         
@@ -74,20 +75,23 @@ public class StartGame : MonoBehaviour
                 }
             }
 
+        
+
+        
             //1 abd 2 nights
-            if (nightDuration <= 0)
+            if (nightDuration <= 0 && (GameManager.instance.currentLevel == 2 || GameManager.instance.currentLevel == 1))
             {
                 chick.SetActive(true);
                 Invoke("LoadSurvive", 4f);
 
-            }
-
-            //3 night
-            if (nightDuration <= 10)
+            } else if (nightDuration <= 0 && (GameManager.instance.currentLevel == 3))
+        {
+            LoadGO();
+        } else if (nightDuration <= 10 && GameManager.instance.currentLevel == 3)
             {
                 finalWitch.SetActive(true);
             }
-        }
+        
     }
 
     void LoadSurvive()

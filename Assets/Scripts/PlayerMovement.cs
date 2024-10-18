@@ -42,16 +42,21 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleInteractionCheck()
     {
-        Debug.Log("INTERACTION start check " + interactionDistance);
-        GameManager gm = FindObjectOfType<GameManager>();
-        if (gm != null && gm.witchReflects == true)
+        if (GameManager.instance.currentLevel == 1)
         {
-            interactionDistance = 10f;
-        } else if (gm != null && gm.witchReflects == false)
-        {
-            interactionDistance = 3f;
-        }
 
+
+            Debug.Log("INTERACTION start check " + interactionDistance);
+            GameManager gm = FindObjectOfType<GameManager>();
+            if (gm != null && gm.witchReflects == true)
+            {
+                interactionDistance = 10f;
+            }
+            else if (gm != null && gm.witchReflects == false)
+            {
+                interactionDistance = 3f;
+            }
+        }
             // Create the ray directly from the camera's forward direction
             Ray ray = playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)); // center of the screen
         Debug.DrawRay(ray.origin, ray.direction * interactionDistance, Color.red, 2f); // Visible for 2 seconds
@@ -134,31 +139,37 @@ public class PlayerMovement : MonoBehaviour
             HandleInteractionInput();
         }
 
-        if (currentKeyholeIndex >= keyholes.Length && isFilling)
+        if (GameManager.instance.currentLevel == 1)
         {
-            isFilling = false;
-            currentKeyholeIndex = keyholes.Length - 1;
-            
-        }
 
-        if (currentKeyholeIndex >= keyholes.Length - 1)
-        {
-            //door locked
-            Debug.Log("LOCKLOCK " + doorLocked + " " + currentKeyholeIndex + " " + " " + keyholes.Length);
-            doorLocked = true;
-        } else
-        {
-            doorLocked = false;
-            Debug.Log("NO LOCKLOCK " + doorLocked + " " + currentKeyholeIndex + " " + " " + keyholes.Length);
-        }
 
-        if (isFilling)
-        {
-            HandleFilling();
-        }
-        else
-        {
-            HandleUnfilling();
+            if (currentKeyholeIndex >= keyholes.Length && isFilling)
+            {
+                isFilling = false;
+                currentKeyholeIndex = keyholes.Length - 1;
+
+            }
+
+            if (currentKeyholeIndex >= keyholes.Length - 1)
+            {
+                //door locked
+                Debug.Log("LOCKLOCK " + doorLocked + " " + currentKeyholeIndex + " " + " " + keyholes.Length);
+                doorLocked = true;
+            }
+            else
+            {
+                doorLocked = false;
+                Debug.Log("NO LOCKLOCK " + doorLocked + " " + currentKeyholeIndex + " " + " " + keyholes.Length);
+            }
+
+            if (isFilling)
+            {
+                HandleFilling();
+            }
+            else
+            {
+                HandleUnfilling();
+            }
         }
     }
 
@@ -195,39 +206,49 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator FillCurrentKeyhole()
     {
-        Image currentKeyhole = keyholes[currentKeyholeIndex];
-
-        while (currentKeyhole.fillAmount < 1f)
+        if (GameManager.instance.currentLevel == 1)
         {
-            // Gradually fill the image
-            currentKeyhole.fillAmount += fillSpeed * Time.deltaTime;
-            yield return null;
-        }
 
-        // Move to the next image after the current one is fully filled
-        currentKeyholeIndex++;
-        fillingInProgress = false; // Allow the next image to be filled after spacebar is released
+
+            Image currentKeyhole = keyholes[currentKeyholeIndex];
+
+            while (currentKeyhole.fillAmount < 1f)
+            {
+                // Gradually fill the image
+                currentKeyhole.fillAmount += fillSpeed * Time.deltaTime;
+                yield return null;
+            }
+
+            // Move to the next image after the current one is fully filled
+            currentKeyholeIndex++;
+            fillingInProgress = false; // Allow the next image to be filled after spacebar is released
+        }
     }
 
     private IEnumerator UnfillCurrentKeyhole()
     {
-        Image currentKeyhole = keyholes[currentKeyholeIndex];
-
-        while (currentKeyhole.fillAmount > 0f)
+        if (GameManager.instance.currentLevel == 1)
         {
-            currentKeyhole.fillAmount -= fillSpeed * Time.deltaTime;
-            yield return null;
-        }
 
-        // Move to the previous image after the current one is fully unfilled
-        currentKeyholeIndex--;
-        fillingInProgress = false; // Allow the next image to be unfilled after spacebar is released
 
-        // If we've unfilled all images, switch back to filling mode
-        if (currentKeyholeIndex < 0)
-        {
-            isFilling = true; // Switch back to filling mode
-            currentKeyholeIndex = 0; // Start from the first image again
+            Image currentKeyhole = keyholes[currentKeyholeIndex];
+
+            while (currentKeyhole.fillAmount > 0f)
+            {
+                currentKeyhole.fillAmount -= fillSpeed * Time.deltaTime;
+                yield return null;
+            }
+
+            // Move to the previous image after the current one is fully unfilled
+            currentKeyholeIndex--;
+            fillingInProgress = false; // Allow the next image to be unfilled after spacebar is released
+
+            // If we've unfilled all images, switch back to filling mode
+            if (currentKeyholeIndex < 0)
+            {
+                isFilling = true; // Switch back to filling mode
+                currentKeyholeIndex = 0; // Start from the first image again
+            }
         }
     }
 }
