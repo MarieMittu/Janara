@@ -185,8 +185,13 @@ public class TestInteractable : Interactable
     public void ShowWitch()
     {
         Debug.Log("MIRRORRRR");
-        witchReflection.SetActive(true);
-        Invoke("RemoveWitch", 1f);
+        GameManager gm = FindObjectOfType<GameManager>(); 
+        if (gm != null && gm.witchReflects == true)
+        {
+            witchReflection.SetActive(true);
+            Invoke("RemoveWitch", 1f);
+        }
+       
     }
 
     public void RemoveWitch()

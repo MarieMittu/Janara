@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -10,10 +11,14 @@ public class GameManager : MonoBehaviour
     public float flickerDuration = 0.2f; // How long each flicker lasts
     public float timeBetweenFlickers = 0.1f; // Time between the two flickers
     public float startDelay = 60f; // Initial delay of 1 minute before starting flickers
-    public float intervalBetweenFlickerSets = 45f; // Time between each flicker set
+    public float intervalBetweenFlickerSets = 35f; // Time between each flicker set
 
     float[] defaultIntensities;
     float timer;
+
+    public bool witchReflects = false;
+
+    
 
     // Rule 6
     public GameObject croce;
@@ -65,6 +70,10 @@ public class GameManager : MonoBehaviour
 
             // Return the candle to the default intensity
             ResetToDefaultIntensity();
+
+            witchReflects = true;
+            yield return new WaitForSeconds(10);
+            witchReflects = false;
 
             // Wait for 45 seconds before the next flicker set
             yield return new WaitForSeconds(intervalBetweenFlickerSets);
