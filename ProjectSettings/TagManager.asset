@@ -19,6 +19,7 @@ TagManager:
   - TIMER
   - LOCK
   - LINE
+  - REFLECTION
   layers:
   - Default
   - TransparentFX

@@ -15,9 +15,11 @@ public class TestInteractable : Interactable
     private GameObject doorParent;
     private GameObject bathDoorParent;
 
+    public GameObject witchReflection;
 
     private void Start()
     {
+        
         interactAction.SetActive(false);
         subCamera.enabled = false;
         playerCamera.enabled = true;
@@ -183,6 +185,14 @@ public class TestInteractable : Interactable
     public void ShowWitch()
     {
         Debug.Log("MIRRORRRR");
+        witchReflection.SetActive(true);
+        Invoke("RemoveWitch", 1f);
+    }
+
+    public void RemoveWitch()
+    {
+        Destroy(witchReflection);
+        
     }
 
     public void TurnCroce()
