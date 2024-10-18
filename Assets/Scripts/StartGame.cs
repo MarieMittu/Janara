@@ -19,6 +19,7 @@ public class StartGame : MonoBehaviour
     public GameObject clockArrow;
     public GameObject witchHolder;
     public GameObject chick;
+    public GameObject finalWitch;
 
     // Start is called before the first frame update
     void Start()
@@ -73,14 +74,18 @@ public class StartGame : MonoBehaviour
                 }
             }
 
-            
-
-              
-
+            //1 abd 2 nights
             if (nightDuration <= 0)
             {
                 chick.SetActive(true);
                 Invoke("LoadSurvive", 4f);
+
+            }
+
+            //3 night
+            if (nightDuration <= 10)
+            {
+                finalWitch.SetActive(true);
             }
         }
     }

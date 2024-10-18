@@ -4,6 +4,7 @@ using UnityEngine;
 using static UnityEngine.Events.UnityAction;
 using System;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class TestInteractable : Interactable
 {
@@ -88,6 +89,9 @@ public class TestInteractable : Interactable
                 break;
             case "DOORTWO":
                 OpenDoorTwo();
+                break;
+            case "WITCH":
+                SceneManager.LoadScene("FinalScene");
                 break;
  
                 
