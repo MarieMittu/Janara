@@ -42,21 +42,21 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleInteractionCheck()
     {
-        if (GameManager.instance.currentLevel == 1)
-        {
+        //if (GameManager.instance.currentLevel == 1)
+        //{
 
 
-            Debug.Log("INTERACTION start check " + interactionDistance);
-            GameManager gm = FindObjectOfType<GameManager>();
-            if (gm != null && gm.witchReflects == true)
-            {
-                interactionDistance = 10f;
-            }
-            else if (gm != null && gm.witchReflects == false)
-            {
-                interactionDistance = 3f;
-            }
-        }
+        //    Debug.Log("INTERACTION start check " + interactionDistance);
+        //    GameManager gm = FindObjectOfType<GameManager>();
+        //    if (gm != null && gm.witchReflects == true)
+        //    {
+        //        interactionDistance = 10f;
+        //    }
+        //    else if (gm != null && gm.witchReflects == false)
+        //    {
+        //        interactionDistance = 3f;
+        //    }
+        //}
             // Create the ray directly from the camera's forward direction
             Ray ray = playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)); // center of the screen
         Debug.DrawRay(ray.origin, ray.direction * interactionDistance, Color.red, 2f); // Visible for 2 seconds

@@ -76,6 +76,8 @@ public class RuleFive : MonoBehaviour
 
         void LoadGO()
         {
+            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.visible = true;
             SceneManager.LoadScene("GameOverScene");
         }
 

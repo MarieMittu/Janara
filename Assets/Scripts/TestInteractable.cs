@@ -43,7 +43,7 @@ public class TestInteractable : Interactable
         {
             ShowWitch();
         }
-        else if (gameObject.tag == "CROCE" && gameObject.transform.rotation.x <= 0)
+        else if (gameObject.tag == "CROCE" && gameObject.transform.rotation.x <= 0 && GameManager.instance.currentLevel == 3)
         {
             interactAction.SetActive(false);
             Debug.Log("what croce one " + gameObject.transform.rotation.x);
@@ -202,7 +202,7 @@ public class TestInteractable : Interactable
         letterView.SetActive(true);
         Time.timeScale = 0f;
         Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
+        Cursor.lockState = CursorLockMode.Confined;
     }
 
 
@@ -231,7 +231,7 @@ public class TestInteractable : Interactable
     public void ShowWitch()
     {
         Debug.Log("MIRRORRRR");
-        GameManager gm = FindObjectOfType<GameManager>(); 
+        StartGame gm = FindObjectOfType<StartGame>(); 
         if (gm != null && gm.witchReflects == true)
         {
             witchReflection.SetActive(true);
