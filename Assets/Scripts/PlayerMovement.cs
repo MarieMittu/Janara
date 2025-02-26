@@ -37,6 +37,7 @@ public class PlayerMovement : MonoBehaviour
         audioSource.clip = footstepSound; // Set the footstep sound clip
         audioSource.loop = true;
         audioSource.playOnAwake = false;
+        audioSource.volume = 0.15f;
     }
 
 
@@ -119,15 +120,19 @@ public class PlayerMovement : MonoBehaviour
             velocity.y += gravity * Time.deltaTime;
             controller.Move(velocity * Time.deltaTime);
 
-            //if (move.magnitude > 0)
-            //{
-            //    audioSource.Play(); // Start playing the footstep sound
-            //    Debug.Log("audioSource.Play");
-            //}
-            //else if (audioSource.isPlaying)
-            //{
-            //    audioSource.Stop(); // Stop the footstep sound
-            //}
+            if (move.magnitude > 0)
+            {
+                if (!audioSource.isPlaying)
+                {
+                    audioSource.Play(); // Start playing the footstep sound
+                    Debug.Log("audioSource.Play");
+                }
+               
+            }
+            else 
+            {
+                if (audioSource.isPlaying) audioSource.Stop(); // Stop the footstep sound
+            }
         }
       
 
