@@ -162,7 +162,18 @@ public class TestInteractable : Interactable
         PlayerMovement playerMovement = FindObjectOfType<PlayerMovement>(); // Find the player movement script
         if (playerMovement != null)
         {
-            playerMovement.SetMovementState(true); // Disable movement
+            CharacterController controller = playerMovement.GetComponent<CharacterController>();
+
+            if (controller != null)
+            {
+                controller.enabled = false;
+                playerMovement.transform.position += Vector3.up * 0.1f; // Move slightly up
+                controller.enabled = true;
+            }
+
+            playerMovement.SetMovementState(true);
+
+           
         }
     }
 

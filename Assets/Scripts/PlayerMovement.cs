@@ -38,6 +38,10 @@ public class PlayerMovement : MonoBehaviour
         audioSource.loop = true;
         audioSource.playOnAwake = false;
         audioSource.volume = 0.15f;
+
+        Rigidbody rb = GetComponent<Rigidbody>();
+        if (rb) Destroy(rb);
+
     }
 
 
@@ -103,6 +107,10 @@ public class PlayerMovement : MonoBehaviour
     public void SetMovementState(bool state)
     {
         canMove = state;
+        if (state)
+        {
+            velocity.y = -2f; // Reset gravity when movement is re-enabled
+        }
     }
 
     // Update is called once per frame
@@ -113,9 +121,18 @@ public class PlayerMovement : MonoBehaviour
             float x = Input.GetAxis("Horizontal");
             float z = Input.GetAxis("Vertical");
 
-         
-            Vector3 move = transform.right * x + transform.forward * z;
+            float deadZone = 0.1f;
+            if (Mathf.Abs(x) < deadZone) x = 0f;
+            if (Mathf.Abs(z) < deadZone) z = 0f;
+
+            Vector3 move = (transform.right * x + transform.forward * z).normalized;
+            if (move.magnitude < 0.1f) move = Vector3.zero;
             controller.Move(move * speed * Time.deltaTime);
+
+            if (controller.isGrounded)
+            {
+                velocity.y = -2f;
+            }
 
             velocity.y += gravity * Time.deltaTime;
             controller.Move(velocity * Time.deltaTime);
