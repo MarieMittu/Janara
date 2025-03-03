@@ -136,7 +136,7 @@ public class TestInteractable : Interactable
     {
         subCamera.enabled = true;
         playerCamera.enabled = false;
-        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         eye.SetActive(false);
         exitBtn.SetActive(true);
@@ -213,7 +213,7 @@ public class TestInteractable : Interactable
         letterView.SetActive(true);
         Time.timeScale = 0f;
         Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.lockState = CursorLockMode.None;
     }
 
 

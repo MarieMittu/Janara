@@ -495,6 +495,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenu: {fileID: 996233041}
+  letterView: {fileID: 10103074}
   mainCamera: {fileID: 1404224050}
   subCameras:
   - {fileID: 1682504442}

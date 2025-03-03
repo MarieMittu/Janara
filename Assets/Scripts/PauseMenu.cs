@@ -6,18 +6,18 @@ using UnityEngine.SceneManagement;
 public class PauseMenu : MonoBehaviour
 {
     [SerializeField] GameObject pauseMenu;
-
+    [SerializeField] GameObject letterView;
     private Camera currentActiveCamera; // To track which camera was active
-    [SerializeField] Camera mainCamera; // Assign your main camera in the inspector
+    [SerializeField] Camera mainCamera; 
     [SerializeField] Camera[] subCameras;
 
     private bool isPaused = false;
-    private bool hideCursorOnResume;
+    private bool wasInSubscene = false;
+    private bool wasViewingLetter = false;
 
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked; // Initially lock the cursor
-        Cursor.visible = false; // Hide the cursor in the main camera
+        Cursor.lockState = CursorLockMode.Locked; 
     }
 
     public void Pause()
@@ -25,15 +25,11 @@ public class PauseMenu : MonoBehaviour
         pauseMenu.SetActive(true);
         Time.timeScale = 0f;
         isPaused = true;
-
-        Cursor.visible = true;
+        wasInSubscene = !mainCamera.enabled; 
+        wasViewingLetter = letterView.activeSelf;
+        //Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
 
-        // Determine the camera in use and adjust cursor behavior for when we resume
-        hideCursorOnResume = mainCamera.gameObject.activeSelf;
-
-        Debug.Log("Game paused. Cursor visible. Active camera: " +
-                  (hideCursorOnResume ? "Main Camera" : "Subcamera"));
     }
 
     void Update()
@@ -43,11 +39,11 @@ public class PauseMenu : MonoBehaviour
         {
             if (isPaused)
             {
-                Resume();  // Resume game
+                Resume();  
             }
-            else
+            else if (!letterView.activeSelf)
             {
-                Pause();   // Pause game
+                Pause();  
             }
         }
     }
@@ -58,18 +54,20 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1f;
         isPaused = false;
 
-        // Restore cursor lock state based on whether the main camera is active
-        if (hideCursorOnResume)
+        if (wasViewingLetter)
         {
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked; // Lock cursor for main gameplay
-            Debug.Log("Resumed on Main Camera. Cursor hidden and locked.");
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+        else if (wasInSubscene)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
         else
         {
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;   // Keep cursor visible for subcameras
-            Debug.Log("Resumed on Subcamera. Cursor visible.");
+            Cursor.lockState = CursorLockMode.Locked;
+            //Cursor.visible = false;
         }
 
     }
